@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app='LunchCheck'>
+  <head>
+    <meta charset="utf-8">
+    <style>
+		.container {
+			margin: 40px;
+		}
+		.color_msg_red {
+			color:red;
+		}
+		.color_msg_green {
+			color:green;
+		}
+		.color_text_box_red {
+			border-color: red;
+		}
+		.color_text_box_green {
+			border-color: green;
+		}
+	</style>
+    <title>AngularJS</title>
+  </head>
+  <body>
+    <div class= "container" ng-controller='LunchCheckController'>
+		<input class={{colorTextBox}} type="text" ng-model="name" ng-blur="upper();" required>
+		<button ng-click="tooMuch()">Check If Too Much</button>
+		<br>
+		<span>
+			<h3 class={{colorMsg}}>{{msgText}}</h3>
+		</span>	  
+    </div>
+	<script src="angular.min.js"></script>
+	<script src="app.js"></script>
+  </body>
+</html>
