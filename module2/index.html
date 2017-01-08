@@ -1,36 +1,95 @@
-<!DOCTYPE html>
-<html ng-app='LunchCheck'>
-  <head>
-    <meta charset="utf-8">
-    <style>
-		.container {
-			margin: 40px;
-		}
-		.color_msg_red {
-			color:red;
-		}
-		.color_msg_green {
-			color:green;
-		}
-		.color_text_box_red {
-			border-color: red;
-		}
-		.color_text_box_green {
-			border-color: green;
-		}
-	</style>
-    <title>AngularJS</title>
-  </head>
-  <body>
-    <div class= "container" ng-controller='LunchCheckController'>
-		<input class={{colorTextBox}} type="text" ng-model="name" ng-blur="upper();" required>
-		<button ng-click="tooMuch()">Check If Too Much</button>
-		<br>
-		<span>
-			<h3 class={{colorMsg}}>{{msgText}}</h3>
-		</span>	  
-    </div>
-	<script src="angular.min.js"></script>
-	<script src="app.js"></script>
-  </body>
+<!doctype html>
+<html  ng-app='ShoppingListCheckOff'>
+    <head>
+        <meta charset="UTF-8">
+        <title>Store</title>
+        <link href="" rel="stylesheet" >
+		<script src="angular.min.js"></script>
+        <script src="app.js"></script>
+		<link href="bootstrap.min.css" rel="stylesheet"/>
+	    <!-- Bootstrap -->   
+	    <script src="bootstrap.min.js"></script>
+
+    </head>
+<body>
+<br>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<div class="panel panel-info">
+				<div class="panel-heading"><h1>Shopping List</h1></div>
+			
+				<div class="panel-heading"   ng-controller='ToBuyController as ToBuyCtrl'>
+				<form method="post">
+						<div class="row">
+							<div class="col-md-3">
+								<input type="text" class="form-control" ng-model="ToBuyCtrl.itemName" placeholder="item name">
+							</div>
+							<div class="col-md-3">
+							    <input type="text" class="form-control"  ng-model="ToBuyCtrl.itemQuantity" placeholder="quantity">
+							</div>
+							<div class="col-md-3">
+								<button class="btn btn-success" ng-click="ToBuyCtrl.addItem();">Add Item To Shopping List</button>
+							</div>	
+						</div>
+				</form>
+				</div>
+				
+				<div class="panel-body">
+					 <div  ng-controller='AlreadyBoughtController as AlreadyBoughtCtrl'>
+					<div class="col-md-6">
+						<div class="panel panel-info">
+							<div class="panel-heading"><h3>To Buy</h3></div>
+							<br>
+							<div class='alert alert-danger' ng-if="!AlreadyBoughtCtrl.CountItemsList1()">
+				                <b>EVERYTHING IS BOUGHT!</b>
+		                    </div>
+							<div  ng-if="AlreadyBoughtCtrl.CountItemsList1()" class="panel-body">
+						        <table class="table table-striped">
+                                <tbody>
+								
+								<tr  ng-repeat="item in AlreadyBoughtCtrl.toBuyList">
+                                    <th>Buy {{ item.quantity }}  {{ item.name }}</th>
+                                    <th><button class="btn btn-success" ng-click="AlreadyBoughtCtrl.AddItemToList2($index);">Bought</button> </th>
+                                </tr>
+								
+								</tbody>
+                                </table>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-6">
+						<div class="panel panel-info">
+							<div class="panel-heading"><h3>Already Bought</h3></div>
+ 						    <br>
+							<div class='alert alert-danger' ng-if="!AlreadyBoughtCtrl.CountItemsList2()">
+				                <b>NOTHING BOUGHT YET!</b>
+		                    </div>
+							<div  ng-if="AlreadyBoughtCtrl.CountItemsList2()" class="panel-body">
+						        <table class="table table-striped">
+                                <tbody>
+								
+								<tr  ng-repeat="item2 in AlreadyBoughtCtrl.boughtList">
+                                    <th> Bought {{ item2.quantity }} {{ item2.name }}</th>
+                                    <th><button class="btn btn-info" ng-click="AlreadyBoughtCtrl.AddItemToList1($index);">Refuse</button></th>
+									
+                                </tr>
+								
+								</tbody>
+                                </table>
+							</div>							
+						</div>
+
+					</div>
+					</div>
+				</div>
+				<div class="panel-footer">&copy; 2017</div>
+			</div>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+</div>
+    </body>
 </html>
