@@ -52,7 +52,7 @@
                                 <tbody>
 								
 								<tr  ng-repeat="item in AlreadyBoughtCtrl.toBuyList">
-                                    <th>Buy {{ item.quantity }}  {{ item.name }}</th>
+                                    <th>{{$index+1}}. Buy {{ item.quantity }}  {{ item.name }}</th>
                                     <th><button class="btn btn-success" ng-click="AlreadyBoughtCtrl.AddItemToList2($index);">Bought</button> </th>
                                 </tr>
 								
@@ -74,7 +74,7 @@
                                 <tbody>
 								
 								<tr  ng-repeat="item2 in AlreadyBoughtCtrl.boughtList">
-                                    <th> Bought {{ item2.quantity }} {{ item2.name }}</th>
+                                    <th>{{$index+1}}. Bought {{ item2.quantity }} {{ item2.name }}</th>
                                     <th><button class="btn btn-info" ng-click="AlreadyBoughtCtrl.AddItemToList1($index);">Refuse</button></th>
 									
                                 </tr>
