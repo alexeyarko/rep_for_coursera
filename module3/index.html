@@ -5,16 +5,16 @@
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Using $http Service</title>
+    <title>assignment-3</title>
   </head>
   <body>
-    <h1>Using $http Service</h1>
+    <h1></h1>
 
     <div ng-controller='MenuCategoriesController as menu'>
       
       <input type="text" ng-model="menu.searchTerm" >
 	  <button ng-click="menu.searchMenuItems();">Narrow It Down For Me!</button>
-	  <div> col found items in array#2 - {{menu.CountFoundItems()}}</div>
+	  <div>found items:  {{menu.CountFoundItems()}}</div>
 
 	  <h5>{{menu.errorMessage}}</h5>
       <shopping-list 
