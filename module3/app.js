@@ -9,7 +9,7 @@ angular.module('MenuCategoriesApp', [])
 //.constant('ApiBasePath', "http://cours.com:8080/lecture25")
 .directive('shoppingList', ShoppingListDirective)
 
-.constant('ApiBasePath', "http://davids-restaurant.herokuapp.com");
+.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com");
 
 function ShoppingListDirective() {
   var ddo = {
