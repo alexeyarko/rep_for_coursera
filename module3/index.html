@@ -17,13 +17,6 @@
 	  <div> col found items in array#2 - {{menu.CountFoundItems()}}</div>
 
 	  <h5>{{menu.errorMessage}}</h5>
-	  <ul>
-        <li ng-repeat="menu_item in menu.foundItems">
-          {{ menu_item.short_name }}
-          {{ menu_item.name }}
-        </li>
-      </ul>
-	 ===============
       <shopping-list 
 	  items2="menu.getItems()"
 	  on-remove="menu.removeItem(index)"
