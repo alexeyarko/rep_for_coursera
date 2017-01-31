@@ -1,0 +1,9 @@
+<ol>
+  <li ng-repeat="item in list.items2"> 
+          {{ item.short_name }}--
+          {{ item.name }}
+     <button ng-click="list.onRemove({index: $index});">Don't want this one!</button>
+  </li>
+</ol>
+<div class="error" ng-if="list.cookiesInList()">EMPTY!!!</div>
+<h4>--------  * * * --------</h4>
