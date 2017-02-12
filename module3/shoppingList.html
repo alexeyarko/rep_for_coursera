@@ -1,9 +1,25 @@
-<ol>
-  <li ng-repeat="item in list.items2"> 
-          {{ item.short_name }}--
-          {{ item.name }}
-     <button ng-click="list.onRemove({index: $index});">Don't want this one!</button>
-  </li>
-</ol>
-<div class="error" ng-if="list.cookiesInList()"></div>
+<div class='alert alert-danger' ng-if="list.infoMsg">Nothing found</div>
+<span class="badge" ng-if="list.moreThanZerro">{{list.countItems}} item(s)</span>
+<br>
+<br>
+<div class="panel panel-info" ng-if="list.moreThanZerro">
+<div class="panel-body">
+<table class="table table-striped" ng-if="list.moreThanZerro">
+ <tr>
+    <th>ShortName</th>
+    <th>Name</th> 
+    <th>Description</th>
+    <th>Remove Item </th>
+  </tr>
+  <tbody>
+  <tr ng-repeat="item in list.getitems"> 
+    <td> {{ item.short_name }}  </td>
+    <td> {{ item.name }}  </td>
+    <td> {{item.description}} </td>
+    <td> <button  class="btn btn-warning" ng-click="list.onRemove({index: $index});">Don't want this one!</button></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
 

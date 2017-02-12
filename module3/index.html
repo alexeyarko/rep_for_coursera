@@ -1,27 +1,48 @@
 <!DOCTYPE html>
-<html ng-app='MenuCategoriesApp'>
+<html ng-app='NarrowItDownApp'>
   <head>
     <meta charset="utf-8">
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
-    <link rel="stylesheet" href="styles.css">
-    <title>assignment-3</title>
+  <!-- jQuery -->
+    <script src="jquery-3.1.0.js"></script>
+  <!-- Bootstrap -->   
+  <script src="bootstrap.min.js"></script>
+  <link href="bootstrap.min.css" rel="stylesheet"/>
+    <title>Menu Categories</title>
   </head>
   <body>
-    <h1></h1>
-
-    <div ng-controller='MenuCategoriesController as menu'>
+    <br>
+    <div class="container-fluid">
+  <div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="panel panel-info">
+      <div class="panel-heading"><h1>Menu Categories</h1></div>
       
-      <input type="text" ng-model="menu.searchTerm" >
-	  <button ng-click="menu.searchMenuItems();">Narrow It Down For Me!</button>
-	  <div>found items:  {{menu.CountFoundItems()}}</div>
-
-	  <h5>{{menu.errorMessage}}</h5>
-      <shopping-list 
-	  items2="menu.getItems()"
-	  on-remove="menu.removeItem(index)"
-	  ></shopping-list>
-	</div>
-
+      <div class="panel-body" ng-controller='NarrowItDownController as menu'>
+        <div class="row">
+          <div class="col-md-3">
+            <input type="text" class="form-control" ng-model="menu.searchTerm" placeholder="search term">
+          </div>
+            <div class="col-md-3">
+            <button class="btn btn-primary" ng-click="menu.searchMenuItems();">Narrow It Down For Me!</button>
+            </div>
+        </div>        
+        <br>
+        <found-items 
+        getitems="menu.getItems()"
+        info-msg="menu.infoMsg"
+        more-than-zerro="menu.CountMoreThanZerro()"
+        count-items="menu.CountFoundItems()"
+        on-remove="menu.removeItem(index)"
+        ></found-items>
+      </div>
+      <div class="panel-footer">2017</div>
+      </div>
+  </div>
+  <div class="col-md-1"></div>
+  </div>
+  </div>
   </body>
 </html>

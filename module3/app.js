@@ -1,196 +1,131 @@
 (function () {
 'use strict';
+angular.module('NarrowItDownApp', [])
+.controller('NarrowItDownController', NarrowItDownController )
+.service('MenuSearchService', MenuSearchService)
+.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com")
+.directive('foundItems', FoundItemsDirective);
 
-angular.module('MenuCategoriesApp', [])
-.controller('MenuCategoriesController', MenuCategoriesController)
-.service('MenuCategoriesService', MenuCategoriesService)
-.directive('shoppingList', ShoppingListDirective)
-.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com");
-
-function ShoppingListDirective() {
+function FoundItemsDirective() {
   var ddo = {
     templateUrl: 'shoppingList.html',
-    
-	scope: {
-    items2: '=', 
+  scope: {
+    getitems: '<', 
+    infoMsg: '<',
+    moreThanZerro: '<',
+    countItems: '<',
     onRemove: '&'
     }, 
-    controller: ShoppingListDirectiveController,
+    controller: NarrowItDownController ,
     controllerAs: 'list',
     bindToController: true 
   };
-
   return ddo;
 }
 
-function ShoppingListDirectiveController() {
-  var list = this;
-
-  list.cookiesInList = function () {    
-	if (list.items2.length == 0) {
-//	console.log("cookiesInList - true");
-	return true;
-	}
-	else
-	{
-//    console.log("cookiesInList - false");
-	return false;
-	}
-  };
- //////
-  list.cookiesInList2 = function () {     
-
-    return true;
-  }; 
-  
-}
-
-
-
-
-
- MenuCategoriesController.$inject = ['MenuCategoriesService'];
-function MenuCategoriesController(MenuCategoriesService) {
+NarrowItDownController .$inject = ['MenuSearchService'];
+function NarrowItDownController (MenuSearchService) {
   var menu = this;
- // var i = false;
- menu.foundItems = [];
-menu.errorMessage = "";
+
+ menu.infoMsg = false;
+ 
  menu.CountFoundItems = function () {
  var countFoundItems = 0;
- countFoundItems = MenuCategoriesService.getColFoundItems();
+ countFoundItems = MenuSearchService.getColFoundItems();
  return countFoundItems;
  }
  
-menu.searchMenuItems = function () {   
+ menu.CountMoreThanZerro = function () {
+ var rez = 0;
+ rez = MenuSearchService.getColFoundItems();
+ if (rez > 0) 
+ {
+ return true;
+ }
+ else
+ {
+ return false;
+ }
+ }
  
-if(menu.searchTerm){                 
-  menu.foundItems = [];
-  
-  var i = false;
-
-  var promise = MenuCategoriesService.getMenuForCategory(); // delete getMenuCategories();
-   
+menu.searchMenuItems = function () {     
+ 
+if(menu.searchTerm){                   
+  var itemWasAdded = false;
+  var promise = MenuSearchService.getMatchedMenuItems(); 
    promise
-   
-
-  
     .then(function (response) {   
-    
-	menu.menu_it = response.data.menu_items;        // !!!!!        
-	
-
-	 MenuCategoriesService.ClearArray();
-                
-
-	 
-		for (var index = 0; index < menu.menu_it.length; index++) { 
+  menu.menu_it = response.data.menu_items;               
+  MenuSearchService.ClearArray();  
+    for (var index = 0; index < menu.menu_it.length; index++) { 
           var m = menu.menu_it[index].short_name;
-
-		  var vv = function (m) {
+      var vv = function (m) {
            return m.indexOf(menu.searchTerm) !== -1;
            }
-		  
-		  if (vv(m)) {
- 
-			i = true;
-
-            menu.foundItems.push(menu.menu_it[index]);
-
-			MenuCategoriesService.AddFoundItem(menu.menu_it[index]);
-
+      if (vv(m)) {
+      itemWasAdded = true;
+      MenuSearchService.AddFoundItem(menu.menu_it[index]);
           }
         } 
-
-        if (i == true) {
-		    menu.errorMessage = "";
-        
+        if (itemWasAdded == true) {
+      menu.infoMsg = false;
         }
         else
         {
-			menu.errorMessage = "Nothing found";
-          
-        } 		
-
-	
-	
-	
+      menu.infoMsg = true;
+        }       
   })
   .catch(function (error) {
- 
+    console.log("Something went terribly wrong.");     
   }); 
 }
-else{                                     
-    menu.errorMessage = "Nothing found";
-	
-	
+else{                                      
+  MenuSearchService.ClearArray();
+  menu.infoMsg = true;
   }
-  }
-  
-
-
+  }  
+   
    menu.removeItem = function (itemIndex) {
-
-
-	MenuCategoriesService.DelItem(itemIndex);
-	
-	
-  }
-  
-    menu.remLog = function (itemIndex) {
-	
-
+  MenuSearchService.DelFoundItem(itemIndex);
   }
 
-
-  menu.getItems = function () {
-    return MenuCategoriesService.getFoundItems();
-	
-
+   menu.getItems = function () {
+    return MenuSearchService.getFoundItems();
   }
   } 
 
-MenuCategoriesService.$inject = ['$http', 'ApiBasePath'];
+MenuSearchService.$inject = ['$http', 'ApiBasePath'];
 
-function MenuCategoriesService($http, ApiBasePath) {
+function MenuSearchService($http, ApiBasePath) {
   var service = this;
-  var items = [];
-  var foundItems2 = [];
-
-   service.getMenuForCategory = function (searchTerm) {     
+  var ArrayFoundItems = [];
+  
+  service.getMatchedMenuItems = function (searchTerm) {     
     var response = $http({
       method: "GET",
       url: (ApiBasePath + "/menu_items.json"),
     });
-	
-
     return response;
   }; 
   
   service.getColFoundItems = function () {
-	return foundItems2.length;
+  return ArrayFoundItems.length;
   };
   
-    service.getFoundItems = function () {
-    return foundItems2;
+  service.getFoundItems = function () {
+    return ArrayFoundItems;
   };
   
-    service.AddFoundItem = function (ind) {
-    var i = ind;
-	foundItems2.push(i);
-
+  service.AddFoundItem = function (ind) {
+  ArrayFoundItems.push(ind);
   };
   
-    service.DelItem = function (ind) {
-    var i = ind;
-	foundItems2.splice(ind, 1);
-
+  service.DelFoundItem = function (ind) {
+  ArrayFoundItems.splice(ind, 1);
   };
-    service.ClearArray = function () {
-
-	foundItems2 = [];
-
+  
+  service.ClearArray = function () {
+    ArrayFoundItems = [];
   };
- 
 }
-
 })();
