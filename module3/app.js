@@ -23,8 +23,8 @@ function FoundItemsDirective() {
   return ddo;
 }
 
-NarrowItDownController .$inject = ['MenuSearchService'];
-function NarrowItDownController (MenuSearchService) {
+NarrowItDownController .$inject = ['MenuSearchService', '$filter'];
+function NarrowItDownController (MenuSearchService, $filter) {
   var menu = this;
 
  menu.infoMsg = false;
@@ -57,12 +57,27 @@ if(menu.searchTerm){
     .then(function (response) {   
   menu.menu_it = response.data.menu_items;               
   MenuSearchService.ClearArray();  
-    for (var index = 0; index < menu.menu_it.length; index++) { 
-          var m = menu.menu_it[index].short_name;
-      var vv = function (m) {
-           return m.indexOf(menu.searchTerm) !== -1;
+    for (var index = 0; index < menu.menu_it.length; index++) {
+            
+          var searchTerm = $filter('lowercase')(menu.searchTerm);
+          var shortName = $filter('lowercase')(menu.menu_it[index].short_name);
+          var name = $filter('lowercase')(menu.menu_it[index].name);
+          var description = $filter('lowercase')(menu.menu_it[index].description);
+
+      var vv = function (shortName,name,description) {
+           if ((shortName.indexOf(searchTerm) !== -1) ||
+              (name.indexOf(searchTerm) !== -1) ||
+              (description.indexOf(searchTerm) !== -1))
+           {
+              return true;
            }
-      if (vv(m)) {
+           else
+           {
+              return false;
+           }
+           }
+
+      if (vv(shortName,name,description)) {
       itemWasAdded = true;
       MenuSearchService.AddFoundItem(menu.menu_it[index]);
           }
