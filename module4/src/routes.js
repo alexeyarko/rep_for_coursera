@@ -31,16 +31,16 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
     }
   })
   
- // .state('categories.items', {
- //   url: '/{categoryShortName}/items',
- //   templateUrl: 'src/menu/templates/items.template.html',
- //   controller: "ItemsController as itemsCtrl",
- //   resolve: {
- //      items: ['$stateParams', 'MenuDataService', function ($stateParams, MenuDataService) {
- //        return MenuDataService.getItemsForCategory($stateParams.categoryShortName);
- //      }]
- //   }
- // });
+  .state('categories.items', {
+    url: '/{categoryShortName}/items',
+    templateUrl: 'src/menu/templates/items.template.html',
+    controller: "ItemsController as itemsCtrl",
+    resolve: {
+       items: ['$stateParams', 'MenuDataService', function ($stateParams, MenuDataService) {
+         return MenuDataService.getItemsForCategory($stateParams.categoryShortName);
+       }]
+    }
+  });
 }
 
 })();
