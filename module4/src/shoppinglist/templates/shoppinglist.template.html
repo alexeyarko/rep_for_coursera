@@ -1,0 +1,7 @@
+<div class="test11">
+<ul>
+  <li ng-repeat="item in $ctrl.items" ui-sref="mainList.itemDetail({itemId: $index})">
+    {{ item.quantity }} off {{ item.name }}
+  </li>
+</ul>
+</div>
