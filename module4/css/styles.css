@@ -14,23 +14,7 @@ body {
   top: 10px;
 }
 
-li[ui-sref]:hover {
-  display: inline-block;
-  cursor: pointer;
-  border: solid black 1px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
 
-th, td{     
-    background-color: #f1f1c1;
-    border: 1px solid black;
-}
- 
-table {
-    width: 100%; 
-    
-}
 
 
 
