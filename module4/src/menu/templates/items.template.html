@@ -1,18 +1,16 @@
 
-<h3>ITEMS</h3>
+<h4>ITEMS</h4>
 <table>
- 
-  <tr>
-    <th>ShortName</th>
+   <tr>
     <th>Name</th> 
-
+    <th>Description</th>
+    <th>Price</th>
   </tr>
   
   <tr ng-repeat="item in itemsCtrl.items">
-    <td> {{ item.short_name }}  </td>
     <td> {{ item.name }}  </td>
-
-       
+    <td> {{ item.description }}  </td>
+    <td> {{ item.price}}  </td>  
   </tr>
 
 </table>
