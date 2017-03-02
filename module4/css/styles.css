@@ -14,7 +14,6 @@ body {
   top: 10px;
 }
 
-
 li[ui-sref]:hover {
   display: inline-block;
   cursor: pointer;
@@ -23,10 +22,11 @@ li[ui-sref]:hover {
   padding-right: 5px;
 }
 
-
 #list1, #list2 {
   float: left;
+  margin-left: 40px;
 }
-#list2 {
+
+h1 {
   margin-left: 40px;
 }
