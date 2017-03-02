@@ -28,9 +28,9 @@ li[ui-sref]:hover {
 }
 
 #list1 {
- padding-left: 50px;
+ padding-left: 0px;
 }
 
-h1 {
+h1, #menu {
  padding-left: 50px;
 }
