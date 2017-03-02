@@ -27,6 +27,10 @@ li[ui-sref]:hover {
   margin-left: 40px;
 }
 
+#list1 {
+ padding-left: 50px;
+}
+
 h1 {
-  padding-left: 50px;
+ padding-left: 50px;
 }
